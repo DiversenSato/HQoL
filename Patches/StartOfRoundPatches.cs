@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
+using HQoL.Network;
 using HQoL.Util;
 using Unity.Netcode;
 using UnityEngine;
@@ -54,6 +55,13 @@ internal class StartOfRoundPatches
         __instance.shipIntroSpeechSFX = __instance.disableSpeakerSFX;
     }
 
+    [HarmonyPatch(nameof(StartOfRound.EndPlayersFiredSequenceClientRpc))]
+    [HarmonyPostfix]
+    private static void PostEndPlayersFiredSequenceClientRpc(StartOfRound __instance)
+    {
+        HQoLNetwork.Instance.ClearItems();
+    }
+
     [HarmonyPatch(nameof(StartOfRound.AutoSaveShipData))]
     [HarmonyPrefix]
     private static void PostPassTimeToNextDay(StartOfRound __instance)
@@ -74,6 +82,7 @@ internal class StartOfRoundPatches
                     (HQoL.grabObjDeactivatedInfo != null && (bool)HQoL.grabObjDeactivatedInfo.GetValue(scrapObj)) ||
                     !scrapObj.itemProperties.isScrap ||
                     scrapObj.itemProperties.name == "GiftBox" ||
+                    scrapObj.scrapValue <= 0 ||
                     scrapObj.transform.parent.gameObject.GetComponent<AutoParentToShip>() != null ||
                     HQoL.modConfig.storageException.Contains(scrapObj.itemProperties.name.ToLower()) || //internal scrap name
                     HQoL.modConfig.storageException.Contains(scrapObj.gameObject.GetComponentInChildren<ScanNodeProperties>().headerText.ToLower()) || //scan name

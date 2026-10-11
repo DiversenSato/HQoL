@@ -54,7 +54,7 @@ internal class SprayPaintItemPatches
         bool isWeedKillerSprayBottle = (bool)isWeedKillerSprayBottleInfo.GetValue(__instance);
         Transform transform = (Transform)transformInfo.GetValue(__instance);
 
-        if (isWeedKillerSprayBottle)
+        if (isWeedKillerSprayBottle && HQoL.modConfig.sortLoot)
         {
             Vector3 pos = transform.position;
             pos += new Vector3(-3f - (float)saveData/50f, 0f, -2f);

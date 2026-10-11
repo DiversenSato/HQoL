@@ -126,6 +126,7 @@ internal class HQoLNetwork : NetworkBehaviour
                     (HQoL.grabObjDeactivatedInfo != null && (bool)HQoL.grabObjDeactivatedInfo.GetValue(scrapObj)) ||
                     !scrapObj.itemProperties.isScrap ||
                     scrapObj.itemProperties.name == "GiftBox" ||
+                    scrapObj.scrapValue <= 0 ||
                     HQoL.modConfig.storageException.Contains(scrapObj.itemProperties.name.ToLower()) || //internal scrap name
                     HQoL.modConfig.storageException.Contains(scrapObj.gameObject.GetComponentInChildren<ScanNodeProperties>().headerText.ToLower()) || //scan name
                     HQoL.modConfig.storageDenial.Contains(scrapObj.itemProperties.name.ToLower()) || //internal scrap name
@@ -143,6 +144,7 @@ internal class HQoLNetwork : NetworkBehaviour
                     (HQoL.grabObjDeactivatedInfo != null && (bool)HQoL.grabObjDeactivatedInfo.GetValue(scrapObj)) ||
                     !scrapObj.itemProperties.isScrap ||
                     scrapObj.itemProperties.name == "GiftBox" ||
+                    scrapObj.scrapValue <= 0 ||
                     HQoL.modConfig.storageDenial.Contains(scrapObj.itemProperties.name.ToLower()) || //internal scrap name
                     HQoL.modConfig.storageDenial.Contains(scrapObj.gameObject.GetComponentInChildren<ScanNodeProperties>().headerText.ToLower()) || //scan name
                     scrapObj.transform.parent.gameObject.GetComponent<AutoParentToShip>() != null ||
